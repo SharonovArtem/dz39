@@ -1,0 +1,79 @@
+using System;
+
+namespace dzkurs
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            bool isWorking = true;
+            string addPlayerCommand = "1";
+            string banPlayerCommand = "2";
+            string unbanPlayerCommand = "3";
+            string removePlayerCommand = "4";
+            string command;
+
+            while (isWorking)
+            {
+                Console.WriteLine("Введите команду"); 
+                Console.WriteLine($"Создать игрока - 1");
+                Console.WriteLine($"Забанить игрока - 2");
+                Console.WriteLine($"Разбанить игрока - 3");
+                Console.WriteLine($"удалить игрока - 4");
+
+                command = Console.ReadLine();
+
+                if (command == addPlayerCommand)
+                {
+                    Random random = new Random();
+                    string userInput;
+
+                    Console.WriteLine("");
+
+                }
+                else if (command == banPlayerCommand)
+                {
+
+                }
+                else if(command == unbanPlayerCommand)
+                {
+
+                }
+                else if (command == removePlayerCommand)
+                {
+
+                }
+                else
+                {
+                    Console.WriteLine("Неизвестная команда");
+                }
+            }
+        }
+
+        static void AddPlayer()
+        {
+
+        }
+    }
+
+    class Player
+    {
+        public int ID;
+        public string Name;
+        public int Level;
+        public bool BanFlag;
+
+        public Player(int id, string name, int level, bool banFlag)
+        {
+            ID = id;
+            Name = name;
+            Level = level;
+            BanFlag = banFlag;
+        }
+    }
+
+    class DataBase
+    {
+        Player[] players = new Player[0];
+    }
+}
