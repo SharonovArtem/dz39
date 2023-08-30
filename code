@@ -6,6 +6,7 @@ namespace dzkurs
     {
         static void Main(string[] args)
         {
+            
             DataBase dataBase = new DataBase();
             bool isWorking = true;
             string addPlayerCommand = "1";
@@ -30,10 +31,10 @@ namespace dzkurs
                 {
                     Console.Clear();
                     dataBase.AddNewPlayer();
-                }                
+                }
                 else if (command == banPlayerCommand)
                 {
-                    Console.Clear();                    
+                    Console.Clear();
                     dataBase.BanPlayer();
                 }
                 else if (command == unbanPlayerCommand)
@@ -92,15 +93,15 @@ namespace dzkurs
 
     class DataBase
     {
-        
 
-        Player[] players = new Player[0];
+
+        List<Player> players = new List<Player>();
         Player player = new Player(0, null, 0, false);
         int idNumber = 1;
 
         public void ShowAllPlayers()
         {
-            for (int i = 0; i < players.Length; i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 players[i].ShowInfoAboutPlayer(players[i].ID, players[i].Name, players[i].Level, players[i].BanFlag);
             }
@@ -112,16 +113,16 @@ namespace dzkurs
             int tempNumber = 0;
 
             Console.WriteLine("Введите ID игрока");
-            
+
             userInput = Console.ReadLine();
 
-            for (int i = 0; i < players.Length; i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 if (Convert.ToString(players[i].ID) == userInput && players[i].BanFlag == false)
                 {
                     tempNumber = i;
                     break;
-                }                
+                }
             }
 
             if (tempNumber != 0)
@@ -144,7 +145,7 @@ namespace dzkurs
 
             userInput = Console.ReadLine();
 
-            for (int i = 0; i < players.Length; i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 if (Convert.ToString(players[i].ID) == userInput && players[i].BanFlag == true)
                 {
@@ -164,10 +165,10 @@ namespace dzkurs
             }
         }
 
-        public Player[] AddNewPlayer()
+        public List<Player> AddNewPlayer()
         {
             Player player = new Player(0, null, 0, false);
-            Player[] tempPlayers = new Player[players.Length + 1];
+            
             string userInput;
 
             Console.WriteLine("Введите имя игроку");
@@ -178,14 +179,7 @@ namespace dzkurs
             player.Level = 1;
             player.BanFlag = false;
 
-            for (int i = 0; i < players.Length; i++)
-            {
-                tempPlayers[i] = players[i];
-            }
-
-            tempPlayers[tempPlayers.Length - 1] = player;
-
-            players = tempPlayers;
+            players.Add(player);
 
             Console.WriteLine($"Игрок {player.Name} добавлен");
             idNumber++;
@@ -193,50 +187,21 @@ namespace dzkurs
             return players;
         }
 
-        public Player[] RemovePlayer()
+        public List<Player> RemovePlayer()
         {
-            Player[] tempPlayers = new Player[players.Length - 1];
+            
             string userInput;
-            int tempNumber = 0;
 
             Console.WriteLine("Введите ID игрока");
             userInput = Console.ReadLine();
 
-            for (int i = 0; i <= players.Length - 1; i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 if (Convert.ToString(players[i].ID) == userInput)
                 {
-                    tempNumber = i;
+                    Console.WriteLine($"Игрок {players[i].Name} удалён!");
+                    players.Remove(players[i]);
                 }
-            }
-
-            if (tempNumber != 0)
-            {
-                Console.WriteLine($"Игрок {players[tempNumber].Name} удалён");
-
-                for (int i = 0; i < players.Length; i++)
-                {
-                    if (Convert.ToString(players[i].ID) == userInput)
-                    {
-                        players[i] = null;
-
-                        for (int j = i; j < players.Length - 1; j++)
-                        {
-                            players[i] = players[i + 1];
-                        }
-
-                        for (int j = 0; j < tempPlayers.Length; j++)
-                        {
-                            tempPlayers[j] = players[j];
-                        }
-                    }
-                }
-
-                players = tempPlayers;
-            }
-            else
-            {
-                Console.WriteLine("Не получается никого удалить:(");
             }
 
             return players;
